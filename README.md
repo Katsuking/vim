@@ -20,7 +20,7 @@ nvim --version # 7以上であることを確認
 alias nv='nvim'
 ```
 
-各種設定:`/home/im-outie/.config/nvim`
+各種設定:`$HOME/.config/nvim`
 
 他にもたくさんあるっぽいけど、自分が使っているプラグインマネジャー
 [vim-plug](https://github.com/junegunn/vim-plug)
@@ -51,29 +51,31 @@ ubuntuの場合は、`sudo apt install nodejs' だと、バージョンが古い
 ので、インストール後に'nvm'を使って、アップグレードする
 
 👇.bashrcに追加
+
 ```sh
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 ```
-`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash'
+
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+```
 
 
 ## LSP ( Language Server Protocol)
 
-(LSP plugins)[https://github.com/rockerBOO/awesome-neovim#lsp]
-めちゃくちゃたくさんあるけど、使うのは
-https://github.com/neoclide/coc.nvim
-
+[LSP plugins](https://github.com/rockerBOO/awesome-neovim#lsp)
+めちゃくちゃたくさんあるけど、使うのは[coc.nvim](https://github.com/neoclide/coc.nvim)
 
 ## その他の設定
 
-(coc.nvim)[https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim]
+[coc.nvim](https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim)
 
-(coc lang support)[https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions]
+[coc lang support](https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions)
 
 e.g. インストール済み
-`cd /home/im-outie/.config/coc/extensions/node_modules`
-```
+
+`ls $HOME/.config/coc/extensions/node_modules`
 
 :CocInstall coc-css coc-docker coc-html coc-json coc-pyright coc-sh coc-tsserver coc-yaml
 
