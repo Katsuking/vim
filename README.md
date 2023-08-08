@@ -21,6 +21,8 @@ alias nv='nvim'
 ```
 
 各種設定:`$HOME/.config/nvim`
+ディレクトリは新規作成。
+
 
 他にもたくさんあるっぽいけど、自分が使っているプラグインマネジャー
 [vim-plug](https://github.com/junegunn/vim-plug)
@@ -59,6 +61,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 ```sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+nvm install node
 ```
 
 
@@ -82,5 +85,3 @@ e.g. インストール済み
 正常にcoc.nvimが動いているか確認
 `:checkhealth`
 
-
-:

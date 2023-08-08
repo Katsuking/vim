@@ -103,7 +103,7 @@ call plug#begin()
  Plug 'https://github.com/terryma/vim-multiple-cursors'
  Plug 'https://github.com/rafi/awesome-vim-colorschemes'
 
-all plug#end()
+call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin NERDTree 
