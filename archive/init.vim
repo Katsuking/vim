@@ -1,7 +1,5 @@
 
-
 " neovim の設定ファイル
-" 最小設定
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 " terminal
@@ -96,12 +94,12 @@ call plug#begin()
  Plug 'https://github.com/preservim/nerdtree' " File explor
  Plug 'https://github.com/vim-airline/vim-airline'
  Plug 'https://github.com/ap/vim-css-color':
-
-" https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
  Plug 'neoclide/coc.nvim', {'branch': 'release'} 
-
  Plug 'https://github.com/terryma/vim-multiple-cursors'
  Plug 'https://github.com/rafi/awesome-vim-colorschemes'
+ " Fuzzy Finder
+ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 call plug#end()
 
@@ -123,10 +121,36 @@ nnoremap <silent><C-e> :NERDTreeFocus<CR>
 colorscheme jellybeans
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <Leader>f [fzf-p]
+xmap <Leader>f [fzf-p]
+
+nnoremap <Leader>ff             :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
+nnoremap <Leader> [fzf-p]p     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+nnoremap <Leader>st             :<C-u>CocCommand fzf-preview.GitStatus<CR>
+nnoremap <silent> [fzf-p]ga    :<C-u>CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> [fzf-p]b     :<C-u>CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> [fzf-p]B     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+nnoremap <silent> [fzf-p]o     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+nnoremap <silent> [fzf-p]j     :<C-u>CocCommand fzf-preview.Jumps<CR>
+nnoremap <silent> [fzf-p]g;    :<C-u>CocCommand fzf-preview.Changes<CR>
+nnoremap <silent> [fzf-p]/     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+nnoremap <silent> [fzf-p]*     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          [fzf-p]gr    :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
+xnoremap          [fzf-p]gr    "sy:CocCommand   fzf-preview.ProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> [fzf-p]t     :<C-u>CocCommand fzf-preview.BufferTags<CR>
+nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug 'https://github.com/terryma/vim-multiple-cursors'
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrl + n で複数選択 
-nnoremap <Leader>n :fp<C-n><C-n><CR>
+" viw で文字の選択 + Ctrl + n で文字の複数選択
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 " Plug 'neoclide/coc.nvim', {'branch': 'release'} 
