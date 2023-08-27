@@ -1,3 +1,4 @@
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -26,6 +27,17 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
+
+  -- autoclose html tags
+  'windwp/nvim-ts-autotag',
+
+  -- auto close
+  -- auto pairs
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
 
   -- colortheme
   {
@@ -307,6 +319,11 @@ require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
 
+  -- windwp/nvim-ts-autotag setting
+  autotag = {
+    enable = true,
+  },
+
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
 
@@ -432,10 +449,10 @@ end
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  pyright = {},
+  rust_analyzer = {},
+  tsserver = {},
+  html = { filetypes = { 'html', 'twig', 'hbs' } },
 
   lua_ls = {
     Lua = {
@@ -444,6 +461,7 @@ local servers = {
     },
   },
 }
+
 
 -- Setup neovim lua configuration
 require('neodev').setup()
@@ -525,6 +543,36 @@ cmp.setup {
 -- vim: ts=2 sts=2 sw=2 et
 
 -------------------------------------------------------
+-- tsserver
+-------------------------------------------------------
+-- typescript
+-- Do not forget run "npm i -g typescript-language-server"
+
+local status, nvim_lsp = pcall(require, "lspconfig")
+if (not status) then return end
+
+local protocol = require('vim.lsp.protocol')
+
+local on_attach = function(client, bufnr)
+  -- format on save
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = vim.api.nvim_create_augroup("Format", { clear = true }),
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.formatting_seq_sync() end
+    })
+  end
+end
+
+-- TypeScript
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  cmd = { "typescript-language-server", "--stdio" }
+}
+
+
+-------------------------------------------------------
 -- tokyonight
 -------------------------------------------------------
 
@@ -558,6 +606,9 @@ vim.cmd 'autocmd TermOpen * startinsert'
 
 -- start nvim with NERDTree
 -- vim.cmd 'autocmd VimEnter * NERDTree | wincmd p' -- dont create backup file
+
+-- start nvim with nvimtree
+vim.cmd 'autocmd VimEnter * NvimTreeFocus | wincmd p' -- dont create backup file
 
 -- ターミナルモードで行番号を非表示
 vim.cmd 'autocmd TermOpen * setlocal norelativenumber'

@@ -12,4 +12,13 @@ return {
 		t({ "", [[```]] }),
 	}),
 
+	-- hide/unhide
+	s({ trig = "detail" }, {
+		t({ [[<details><summary>]] }), i(0),
+		t({ [[</summary>]] }),
+		t({ "", [[<details>]] }),
+	}),
+
+
+
 }
