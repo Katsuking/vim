@@ -26,7 +26,7 @@ pip3 install pynvim
 
 ## node.js のインストール
 
-node.jsはcoc.nvimを使うのに必要。
+node.jsは Mason ~~coc.nvim~~ を使うのに必要。
 node.js version: `node --version` 
 
 windowsだと普通にダウンロードして、インストールで大丈夫。
