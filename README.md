@@ -1,11 +1,41 @@
-# NEOVIM
 
+### おまけ
+
+いきなりですが、fzf(fuzzy finder)と組み合わせるとさらに強力なので
+```sh
+
+unction nf() {
+        # change dir + open file with neovim
+        local cmdarg=${1}
+        [[ -z ${cmdarg} ]] && local fp=$(find . -type f | fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down)
+
+        [[ -n ${cmdarg} ]]  && cd $(dirname ${cmdarg}) 2>/dev/null && nv "${cmdarg}"
+
+        if [[ -n ${fp} ]];then
+                cd $(dirname "${fp}")
+                [[ $(ls | grep venv) == "venv" ]] && source 'venv/bin/activate'
+                nv $(basename "${fp}" 2>/dev/null)
+        fi
+
+        # init.luaを編集した場合は、git管理ディレクトリへ飛ばす
+        if [[ $(basename ${fp} 2>/dev/null ) == "init.lua" ]]; then
+                cp -rp ~/.config/nvim/* "${dev}/vim"
+        fi
+}
+
+alias nf=nf
+```
+
+# NEOVIM
 [ubuntuにインストール](https://github.com/neovim/neovim/wiki/Installing-Neovim#linux)
 
 👇~/.bashrc
 ```sh
 alias nv='${ssd}/appimage/nvim.appimage' 
 ```
+fuzzy finderと組み合わせるとさらに強力
+
+
 
 neovimのバージョンチェック
 ```sh
@@ -26,7 +56,7 @@ pip3 install pynvim
 
 ## node.js のインストール
 
-node.jsは Mason ~~coc.nvim~~ を使うのに必要。
+node.jsは 自動補完 ~~coc.nvim~~ を使うのに必要。
 node.js version: `node --version` 
 
 windowsだと普通にダウンロードして、インストールで大丈夫。
