@@ -2,9 +2,12 @@
 ### おまけ
 
 いきなりですが、fzf(fuzzy finder)と組み合わせるとさらに強力なので
-```sh
+個人的に用意しているエイリアスの紹介
 
-unction nf() {
+```sh
+alias nv='${ssd}/appimage/nvim.appimage' 
+
+function nf() {
         # change dir + open file with neovim
         local cmdarg=${1}
         [[ -z ${cmdarg} ]] && local fp=$(find . -type f | fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down)
@@ -33,9 +36,6 @@ alias nf=nf
 ```sh
 alias nv='${ssd}/appimage/nvim.appimage' 
 ```
-fuzzy finderと組み合わせるとさらに強力
-
-
 
 neovimのバージョンチェック
 ```sh
