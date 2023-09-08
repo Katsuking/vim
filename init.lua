@@ -1,4 +1,5 @@
 --
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -288,6 +289,18 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
+    vimgrep_arguments = {
+      -- ripggrepコマンドのオプション
+      'rg',
+      '--color=never',   -- telescopeにはいらないらしい
+      '--no-heading',    -- headerを無視する
+      '--with-filename', -- 検索結果にファイル名を含める
+      '--line-number',
+      '--column',        -- 列番号表示
+      '--smart-case',    -- 大文字、小文字区別
+      '--hidden',
+      '-uu',             -- dot fileも検索対象に
+    },
   },
 }
 
@@ -559,7 +572,10 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = vim.api.nvim_create_augroup("Format", { clear = true }),
       buffer = bufnr,
-      callback = function() vim.lsp.buf.formatting_seq_sync() end
+      callback = function()
+        -- vim.lsp.buf.formatting_seq_sync()
+        vim.lsp.buf.format()
+      end
     })
   end
 end
@@ -608,7 +624,7 @@ vim.cmd 'autocmd TermOpen * startinsert'
 -- vim.cmd 'autocmd VimEnter * NERDTree | wincmd p' -- dont create backup file
 
 -- start nvim with nvimtree
-vim.cmd 'autocmd VimEnter * NvimTreeFocus | wincmd p' -- dont create backup file
+-- vim.cmd 'autocmd VimEnter * NvimTreeFocus | wincmd p' -- dont create backup file
 
 -- ターミナルモードで行番号を非表示
 vim.cmd 'autocmd TermOpen * setlocal norelativenumber'
@@ -659,6 +675,16 @@ end, {})
 -- keymap
 -------------------------------------------------------
 
+-- disable Ctrl + Z
+-- Ctrl + z: undo
+-- Ctrl + y: redo
+keymap("n", "<c-z>", "[[:u<CR>]]", opts)
+keymap("n", "<c-y>", "[[:redo<CR>]]", opts)
+
+-- move to the start/end of line
+keymap("n", "<S-l>", "<C-$>", opts)
+keymap("n", "<S-h>", "^", opts)
+
 -- move split panes to left/bottom/top/right
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -681,7 +707,8 @@ keymap('n', '<C-e>', ':NvimTreeFocus<CR>', opts)
 
 -- telescope
 -- find files and hidden files
-keymap('n', '<leader>ff', ':Telescope find_files hidden=true<cr>', { desc = "[F]ind [F]iles and hidden files" })
+keymap('n', '<leader>ff', ':Telescope find_files follow=true no_ignore=true hidden=true<cr>',
+  { desc = "[F]ind [F]iles and hidden files" })
 
 keymap("n", "<C-l>", "<C-w>l", opts)
 
@@ -693,6 +720,29 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 autocmd("BufEnter", {
   pattern = "*",
   command = "set fo-=c fo-=r fo-=o",
+})
+
+-- npm install -g emmet-ls
+
+
+local lspconfig = require('lspconfig')
+local configs = require('lspconfig/configs')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.emmet_ls.setup({
+  -- on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug",
+    "typescriptreact", "vue" },
+  init_options = {
+    html = {
+      options = {
+        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+        ["bem.enabled"] = true,
+      },
+    },
+  }
 })
 
 --

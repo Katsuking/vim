@@ -46,9 +46,11 @@ nvim --version
 sudo apt update -y && sudo apt upgrade -y
 [[ -z $(which curl) ]] && sudo apt install curl -y
 [[ -z $(which git) ]] && sudo apt install git -y
-[[ -z $(which fdfind) ]] && sudo apt install fd-find -y && ln -s $(which fdfind) "~/.local/bin/fd"
+[[ -z $(which fdfind) ]] && sudo apt install fd-find -y && ln -s $(which fdfind) ~/.local/bin/fd
 [[ -z $(which rg) ]] && sudo apt install ripgrep -y
 ```
+
+# add "export PATH=$PATH:'~/.local/bin'" to ~/.bash_aliases
 
 ```sh
 pip3 install pynvim
@@ -76,5 +78,4 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 nvm install node
 ```
-
 
