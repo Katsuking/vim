@@ -31,8 +31,6 @@ sudo apt update -y && sudo apt upgrade -y
 [[ -z $(which rg) ]] && sudo apt install ripgrep -y
 ```
 
-# add "export PATH=$PATH:'~/.local/bin'" to ~/.bash_aliases
-
 ```sh
 pip3 install pynvim
 ```
