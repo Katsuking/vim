@@ -1,11 +1,14 @@
 ### はじめに
 
-もうほぼ思想みたいなもんですが、個人的にVScodeで作業をする言語とneovimを使う言語で別れています。
+個人的にVScodeで作業をする言語とneovimを使う言語で別れています。
+どっちも使ってみてどっちの開発体験がよかったかみてみるといいと思います。
+やはりvscodeは拡張機能がたくさんあり、セットアップも特にいらないことが強みです。
+
 vscode:
         js等のweb系
         remote developmentでサーバーのファイルをいじるとき
 neovim:
-        Compiled 言語
+        rust
         shell
 
 neovimは、なんといっても検索やキーバインドが便利で作業自体は圧倒的に短縮できると思います。
@@ -33,6 +36,13 @@ sudo apt update -y && sudo apt upgrade -y
 
 ```sh
 pip3 install pynvim
+```
+
+Masonを使っているので、これでLSPインストールや、ステータスの確認を行う
+なお、`:MasonInstall server_name`でもインストール可能
+
+```
+:Mason
 ```
 
 ## node.js のインストール
