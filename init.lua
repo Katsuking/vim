@@ -3,7 +3,6 @@
 -- =====================================================================
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 -- VS Codeの Ctrl + D と同じマルチカーソル挙動を再現
 vim.g.multi_cursor_next_key = '<C-d>'
 vim.g.multi_cursor_prev_key = '<C-p>'
@@ -288,6 +287,14 @@ vim.keymap.set("n", "<c-y>", ":redo<CR>", local_opts)
 vim.keymap.set('n', '<S-h>', '^', local_opts)
 vim.keymap.set('n', '<S-l>', '$', local_opts)
 
+-- ノーマルモード用 (For Normal Mode)
+vim.keymap.set("n", "<c-z>", ":u<CR>", local_opts)
+vim.keymap.set("n", "<c-y>", ":redo<CR>", local_opts)
+
+-- インサートモード用 (For Insert Mode)
+vim.keymap.set("i", "<c-z>", "<Cmd>undo<CR>", local_opts)
+vim.keymap.set("i", "<c-y>", "<Cmd>redo<CR>", local_opts)
+
 vim.keymap.set("n", "<C-h>", "<C-w>h", local_opts)
 vim.keymap.set("n", "<C-j>", "<C-w>j", local_opts)
 vim.keymap.set("n", "<C-k>", "<C-w>k", local_opts)
@@ -349,3 +356,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
   callback = function() vim.highlight.on_yank() end,
 })
+
